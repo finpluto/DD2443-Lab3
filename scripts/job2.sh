@@ -12,7 +12,6 @@
 set -e
 cd src/
 ml java 2>&1 >/dev/null
-make clean 2>&1 >/dev/null
 make all 2>&1 >/dev/null
 
 SETNAME=(Default LocalLog GlobalLog Extra)
