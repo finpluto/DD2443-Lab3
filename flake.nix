@@ -23,6 +23,7 @@
               matplotlib
               numpy
               seaborn
+              ipykernel
             ]))
         ];
         NIX_LD_LIBRARY_PATH = with pkgs;
