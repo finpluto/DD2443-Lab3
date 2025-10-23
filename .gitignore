@@ -1,0 +1,4 @@
+/.direnv
+*.class
+/.vscode
+.DS_Store
