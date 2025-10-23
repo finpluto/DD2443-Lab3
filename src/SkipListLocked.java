@@ -11,7 +11,6 @@ public class SkipListLocked<T extends Comparable<T>> extends LockFreeSkipList<T>
         logs.add(entry);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public ArrayList<Log.Entry<T>> getLog() {
         ArrayList<Log.Entry<T>> aggregatedLogs = new ArrayList<>();

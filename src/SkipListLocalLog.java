@@ -26,7 +26,7 @@ public class SkipListLocalLog<T extends Comparable<T>> extends LockFreeSkipList<
 
     @Override
     protected boolean needLockingAtLP() {
-        return true;
+        return false;
     }
 
     @Override
