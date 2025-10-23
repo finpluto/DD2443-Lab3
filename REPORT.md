@@ -6,11 +6,17 @@
 
 ## 1.1 Measurement program
 
-The measurement in Task 1.1 is done by a bash script `scripts/local.sh`, which also measure the locked time sampling in task 2.3.
+The measurement in Task 1.1 is done by a bash script `scripts/local.sh`, the result figure is shown below.
+
+![Execution time of Default implementation, measure locally](./images/1-1.png)
 
 ## 1.2 PDC experiments
 
 The measurement in Task 1.2 is a part of overall Dardel measurement job scripts `scripts/job*.sh`, the idea is to use a quadruple loop to walk over all combination between operation mixure, thread number, distribution, and different implementations.
+
+The measurement of default implementation on the Dardel is shown as below.
+
+![Execution time of Default implementation, measure on the Dardel](./images/1-2.png)
 
 # 2. Identify and validate linearization points
 
@@ -35,9 +41,9 @@ The implementation is a part of `LockFreeSkipList`, since the locked approach is
 
 Since it's not mentioned in the requirement how the log should be aggregated in task 2.3, I decided to use the same global log implementation, which use `java.util.concurrent.ConcurrentLinkedQueue` as the global logger implementation. 
 
-The execution time figure of local measurement in task 1.1, and this task is shown as belows.
+The execution time figure of this task is shown as belows.
 
-![local and locked exeuction time](./images/localnlocked.png)
+![Exeuciton time of locked time sampling implementation](./images/2-3.png)
 
 As expect, the locked version has a dramastic performance drop comparing to the default implementation.
 
@@ -54,20 +60,24 @@ For the `LocalLog`, a `ConcurrentLinkedMap` is used as the overall main registry
 
 For the `GlobalLog`, a `ConcurrentLinkedQueue` is used, since it use the same implementation of the locked one, the only difference of this class is the `needLockingAtLP` overrided with false.
 
+The exeuction time figure of LocalLog and GlobalLog is shown as below.
+
+![Exeuciton time of local logging implementation](./images/2-4.png)
+
+![Exeuciton time of global logging implementation](./images/2-5.png)
+
 ## 2.7. Extra task: global log from scratch
 
 Source code: `src/LockFreeQueue.java` and `src/SkipListExtra.java`.
 
 The implementation of `LockFreeQueue` comes from HSLS, chapter 10, page 237 to 238. It's used as the `java.util.concurrent.ConcurrentLinkedQueue`'s drop in replacement, the implementation is basically the same to the `GlobalLog` one.
 
-## 3. The figures and conclusion
+The exeuction time figure of this extra task is shown as below.
 
-The execution time figure measured on the Dardel is shown as below.
+![Exeuciton time of global logging implementation](./images/2-7.png)
 
-![execution time of lock-free implementations](./images/lockfreetime.png)
-
-The same conclusion in task 2.3 still holds true, the `LockFreeSkipList` is more suitable for the heavy-read situation rather than a frequently modifying one. The order of the performance of three different approach is: `LocalLog` > `GlobalLog` > `Extra`. 
+## 2.6 Discrepancies
 
 ![discrepancies count of lock-free implementations](./images/lockfreediscrep.png)
 
-On the contrary, for the discrepancy shown in the aboving figure, the `Extra` have the least discrepancy count, then `GlobalLog`, the last one is `LocalLog`, which created a significant number of discrepancies.
+On the contrary, while the `LocalLog` perfoms better in execution time, for the discrepancy shown in the aboving figure, the `Extra` have the least discrepancy count, then `GlobalLog`, the last one is `LocalLog`, which created a significant number of discrepancies.
