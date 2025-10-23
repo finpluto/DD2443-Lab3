@@ -8,7 +8,11 @@ public class SkipListLocalLog<T extends Comparable<T>> extends LockFreeSkipList<
     // this threadlocal reference is to avoid accessing logRegistry everytime we
     // putLog.
     ThreadLocal<LinkedList<Log.Entry<T>>> localLogs = ThreadLocal
-            .withInitial(() -> logRegistry.putIfAbsent(Thread.currentThread().getId(), new LinkedList<>()));
+            .withInitial(() -> {
+                long id = Thread.currentThread().getId();
+                logRegistry.putIfAbsent(id, new LinkedList<>());
+                return logRegistry.get(id);
+            });
 
     @Override
     protected void putLog(Log.Entry<T> entry) {
