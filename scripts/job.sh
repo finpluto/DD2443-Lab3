@@ -29,7 +29,7 @@ for tnum in "${THREADS[@]}"; do
     for dis in "${DISTRIBUTION[@]}"; do
         for ops in "${OPS[@]}"; do
             for setn in "${SETNAME[@]}"; do
-                srun java -cp ../src/ Main $tnum $setn $dis $MAXVALUE "$ops" $OPSNUM $WARMUP $MEASUREMENT
+                srun java -cp . Main $tnum $setn $dis $MAXVALUE "$ops" $OPSNUM $WARMUP $MEASUREMENT
             done
         done
     done
